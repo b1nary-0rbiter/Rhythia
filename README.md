@@ -1,4 +1,4 @@
-# Hallway of the Dead (working title)
+# Ryhthia (working title)
 
 VR rhythm-sword game. Slash on the beat.
 
