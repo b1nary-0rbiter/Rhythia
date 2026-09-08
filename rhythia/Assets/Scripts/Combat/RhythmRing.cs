@@ -3,27 +3,26 @@ using UnityEngine.UI;
 
 public class RhythmRing : MonoBehaviour
 {
-    public RectTransform outerArc;
-    public RectTransform innerArc;
-    public Image outerArcImage;
-    public Image innerArcImage;
+    public Image fillBar;
 
-    public float outerSpeed = 90f;
-    public float innerSpeed = -140f;
-    public float toleranceDegrees = 12f;
+    public float cycleTime = 2f;
+    public float shootableThreshold = 0.9f;
+
+    private float fill = 0f;
 
     public bool IsWindowOpen { get; private set; }
 
     void Update()
     {
-        outerArc.Rotate(0, 0, outerSpeed * Time.deltaTime);
-        innerArc.Rotate(0, 0, innerSpeed * Time.deltaTime);
+        fill += Time.deltaTime / cycleTime;
 
-        float diff = Mathf.DeltaAngle(outerArc.eulerAngles.z, innerArc.eulerAngles.z);
-        IsWindowOpen = Mathf.Abs(diff) <= toleranceDegrees;
+        if (fill >= 1f)
+            fill = 0f;
 
-        Color c = IsWindowOpen ? Color.green : Color.red;
-        outerArcImage.color = c;
-        innerArcImage.color = c;
+        fillBar.fillAmount = fill;
+
+        IsWindowOpen = fill >= shootableThreshold;
+
+        fillBar.color = IsWindowOpen ? Color.green : Color.white;
     }
 }
